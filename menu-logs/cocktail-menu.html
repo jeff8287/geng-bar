@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #ffd700, #ffed4e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: #b8b8b8;
+            font-style: italic;
+        }
+
+        .menu-section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #ffd700;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #ffd700, transparent);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-item {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            padding: 25px;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .menu-item:hover::before {
+            left: 100%;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 215, 0, 0.3);
+        }
+
+        .cocktail-name {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+
+        .ingredients {
+            font-size: 0.95rem;
+            color: #b8b8b8;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .ingredients strong {
+            color: #ffd700;
+            font-weight: 500;
+        }
+
+        .category-divider {
+            text-align: center;
+            margin: 40px 0;
+            font-size: 2rem;
+            color: #ffd700;
+            opacity: 0.5;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            color: #b8b8b8;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .menu-item {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .cocktail-name {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>COCKTAIL MENU</h1>
+            <p>Curated selection of handcrafted cocktails</p>
+        </div>
+
+        <div class="menu-section">
+            <h2 class="section-title">REFRESHING</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="cocktail-name">GIN FIZZ</div>
+                    <div class="ingredients"><strong>gin</strong>, <strong>lemon juice</strong>, <strong>simple syrup</strong>, <strong>club soda</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">MOSCOW MULE</div>
+                    <div class="ingredients"><strong>vodka</strong>, <strong>lime juice</strong>, <strong>ginger ale</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">DARK 'N' STORMY</div>
+                    <div class="ingredients"><strong>rum</strong>, <strong>lime juice</strong>, <strong>ginger ale</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">WHISKY HIGHBALL</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>club soda</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">PALOMA</div>
+                    <div class="ingredients"><strong>tequila</strong>, <strong>lime juice</strong>, <strong>club soda</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">AMERICANO</div>
+                    <div class="ingredients"><strong>campari</strong>, <strong>sweet vermouth</strong>, <strong>club soda</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">CAMPARI SPRITZ</div>
+                    <div class="ingredients"><strong>campari</strong>, <strong>club soda</strong>, <strong>orange slice</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">LIMONCELLO SPRITZ</div>
+                    <div class="ingredients"><strong>limoncello</strong>, <strong>club soda</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">GIN BASIL SMASH</div>
+                    <div class="ingredients"><strong>gin</strong>, <strong>basil</strong>, <strong>lemon juice</strong>, <strong>simple syrup</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-divider">✦</div>
+
+        <div class="menu-section">
+            <h2 class="section-title">SWEET / CREAMY</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="cocktail-name">RUM MILK PUNCH</div>
+                    <div class="ingredients"><strong>white rum</strong>, <strong>milk</strong>, <strong>simple syrup</strong>, <strong>nutmeg</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">DISARONNO MILK</div>
+                    <div class="ingredients"><strong>disaronno</strong>, <strong>milk</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">GARIBALDI</div>
+                    <div class="ingredients"><strong>campari</strong>, <strong>orange juice</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">PINEAPPLE SCREWDRIVER</div>
+                    <div class="ingredients"><strong>vodka</strong>, <strong>orange juice</strong>, <strong>pineapple juice</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">ESPRESSO MARTINI</div>
+                    <div class="ingredients"><strong>vodka</strong>, <strong>espresso</strong>, <strong>baileys</strong>, <strong>simple syrup</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">BANANA DAIQUIRI</div>
+                    <div class="ingredients"><strong>white rum</strong>, <strong>banana liqueur</strong>, <strong>lime juice</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">BANANA BREAD</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>banana liqueur</strong>, <strong>baileys</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">GRASSHOPPER</div>
+                    <div class="ingredients"><strong>creme de menthe</strong>, <strong>creme de cacao</strong>, <strong>baileys</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">IRISH COFFEE</div>
+                    <div class="ingredients"><strong>vodka</strong>, <strong>espresso</strong>, <strong>milk</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-divider">✦</div>
+
+        <div class="menu-section">
+            <h2 class="section-title">COMPLEX / BOOZY</h2>
+            <div class="menu-grid">
+                <div class="menu-item">
+                    <div class="cocktail-name">GIMLET</div>
+                    <div class="ingredients"><strong>gin</strong>, <strong>lime juice</strong>, <strong>simple syrup</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">DAIQUIRI</div>
+                    <div class="ingredients"><strong>white rum</strong>, <strong>lime juice</strong>, <strong>simple syrup</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">NEGRONI</div>
+                    <div class="ingredients"><strong>gin</strong>, <strong>campari</strong>, <strong>sweet vermouth</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">BOULEVARDIER</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>campari</strong>, <strong>sweet vermouth</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">MANHATTAN</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>sweet vermouth</strong>, <strong>aromatic bitters</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">BLACK MANHATTAN</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>averna</strong>, <strong>aromatic bitters</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">OLD FASHIONED</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>aromatic bitters</strong>, <strong>simple syrup</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">GOD FATHER</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>disaronno</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">RUSTY NAIL</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>drambuie</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">MEZCAL NEGRONI</div>
+                    <div class="ingredients"><strong>mezcal</strong>, <strong>campari</strong>, <strong>sweet vermouth</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">WHISKY SOUR</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>lemon juice</strong>, <strong>simple syrup</strong>, <strong>angostura bitters</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">PENICILLIN</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>honey syrup</strong>, <strong>lemon juice</strong>, <strong>peated whisky float</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">RUM OLD FASHIONED</div>
+                    <div class="ingredients"><strong>spiced rum</strong>, <strong>simple syrup</strong>, <strong>chocolate bitters</strong></div>
+                </div>
+                <div class="menu-item">
+                    <div class="cocktail-name">FERNET MANHATTAN</div>
+                    <div class="ingredients"><strong>whisky</strong>, <strong>fernet branca</strong>, <strong>sweet vermouth</strong></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Handcrafted with passion • Enjoy responsibly</p>
+        </div>
+    </div>
+</body>
+</html> 

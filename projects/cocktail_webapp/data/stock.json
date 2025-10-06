@@ -1,0 +1,163 @@
+{
+  "spirits": {
+    "gin": {
+      "quantity": 5,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "whisky": {
+      "quantity": 3,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "vodka": {
+      "quantity": 4,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "rum": {
+      "quantity": 2,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "tequila": {
+      "quantity": 2,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "mezcal": {
+      "quantity": 1,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "brandy": {
+      "quantity": 2,
+      "unit": "bottles",
+      "status": "available"
+    }
+  },
+  "liqueurs": {
+    "campari": {
+      "quantity": 2,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "sweet_vermouth": {
+      "quantity": 2,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "limoncello": {
+      "quantity": 1,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "disaronno": {
+      "quantity": 1,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "baileys": {
+      "quantity": 2,
+      "unit": "bottles",
+      "status": "available"
+    }
+  },
+  "mixers": {
+    "club_soda": {
+      "quantity": 10,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "ginger_ale": {
+      "quantity": 8,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "tonic_water": {
+      "quantity": 6,
+      "unit": "bottles",
+      "status": "available"
+    }
+  },
+  "juices": {
+    "lemon_juice": {
+      "quantity": 5,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "lime_juice": {
+      "quantity": 5,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "orange_juice": {
+      "quantity": 3,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "pineapple_juice": {
+      "quantity": 2,
+      "unit": "bottles",
+      "status": "available"
+    }
+  },
+  "syrups": {
+    "simple_syrup": {
+      "quantity": 3,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "honey_syrup": {
+      "quantity": 2,
+      "unit": "bottles",
+      "status": "available"
+    }
+  },
+  "bitters": {
+    "angostura": {
+      "quantity": 2,
+      "unit": "bottles",
+      "status": "available"
+    },
+    "orange_bitters": {
+      "quantity": 1,
+      "unit": "bottles",
+      "status": "available"
+    }
+  },
+  "herbs": {
+    "mint": {
+      "quantity": 5,
+      "unit": "bunches",
+      "status": "available"
+    },
+    "basil": {
+      "quantity": 3,
+      "unit": "bunches",
+      "status": "available"
+    },
+    "rosemary": {
+      "quantity": 2,
+      "unit": "bunches",
+      "status": "available"
+    }
+  },
+  "fruits": {
+    "lemon": {
+      "quantity": 20,
+      "unit": "pieces",
+      "status": "available"
+    },
+    "lime": {
+      "quantity": 20,
+      "unit": "pieces",
+      "status": "available"
+    },
+    "orange": {
+      "quantity": 15,
+      "unit": "pieces",
+      "status": "available"
+    }
+  }
+}

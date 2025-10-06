@@ -1,0 +1,124 @@
+[
+  {
+    "id": 1,
+    "name": "GIN FIZZ",
+    "category": "REFRESHING",
+    "ingredients": [
+      "gin",
+      "lemon juice",
+      "simple syrup",
+      "club soda"
+    ],
+    "description": "상큼하고 시원한 진 기반 칵테일",
+    "difficulty": "Easy",
+    "glass": "Highball",
+    "ice": "Cubes",
+    "garnish": "Lemon wheel",
+    "recommended": true,
+    "alcohol_level": "Medium",
+    "flavor_profile": [
+      "Citrus",
+      "Refreshing",
+      "Light"
+    ],
+    "price": 12000,
+    "prep_time": "3-4 minutes"
+  },
+  {
+    "id": 2,
+    "name": "MOSCOW MULE",
+    "category": "REFRESHING",
+    "ingredients": [
+      "vodka",
+      "lime juice",
+      "ginger ale"
+    ],
+    "description": "진저의 매운맛과 라임의 상큼함이 어우러진 칵테일",
+    "difficulty": "Easy",
+    "glass": "Copper Mug",
+    "ice": "Cubes",
+    "garnish": "Lime wheel, mint sprig",
+    "recommended": true,
+    "alcohol_level": "Medium",
+    "flavor_profile": [
+      "Ginger",
+      "Citrus",
+      "Spicy"
+    ],
+    "price": 11000,
+    "prep_time": "2-3 minutes"
+  },
+  {
+    "id": 3,
+    "name": "NEGRONI",
+    "category": "COMPLEX / BOOZY",
+    "ingredients": [
+      "gin",
+      "campari",
+      "sweet vermouth"
+    ],
+    "description": "진, 캄파리, 베르무트의 완벽한 조화",
+    "difficulty": "Easy",
+    "glass": "Old Fashioned",
+    "ice": "Large cube",
+    "garnish": "Orange peel",
+    "recommended": true,
+    "alcohol_level": "High",
+    "flavor_profile": [
+      "Bitter",
+      "Herbal",
+      "Complex"
+    ],
+    "price": 13000,
+    "prep_time": "2-3 minutes"
+  },
+  {
+    "id": 4,
+    "name": "ESPRESSO MARTINI",
+    "category": "SWEET / CREAMY",
+    "ingredients": [
+      "vodka",
+      "espresso",
+      "baileys",
+      "simple syrup"
+    ],
+    "description": "커피와 크림의 달콤한 조화",
+    "difficulty": "Medium",
+    "glass": "Cocktail",
+    "ice": "Shake with ice",
+    "garnish": "Coffee beans",
+    "recommended": true,
+    "alcohol_level": "Medium",
+    "flavor_profile": [
+      "Coffee",
+      "Creamy",
+      "Sweet"
+    ],
+    "price": 14000,
+    "prep_time": "4-5 minutes"
+  },
+  {
+    "id": 5,
+    "name": "OLD FASHIONED",
+    "category": "COMPLEX / BOOZY",
+    "ingredients": [
+      "whisky",
+      "aromatic bitters",
+      "simple syrup"
+    ],
+    "description": "클래식한 위스키 칵테일의 정석",
+    "difficulty": "Medium",
+    "glass": "Old Fashioned",
+    "ice": "Large cube",
+    "garnish": "Orange peel, cherry",
+    "recommended": true,
+    "alcohol_level": "High",
+    "flavor_profile": [
+      "Bold",
+      "Woody",
+      "Complex"
+    ],
+    "price": 15000,
+    "prep_time": "3-4 minutes"
+  }
+]

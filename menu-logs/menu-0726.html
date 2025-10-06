@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocktail Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #121212;
+            color: #EAEAEA;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .menu-board {
+            width: 100%;
+            max-width: 1200px;
+            background-color: #1e1e1e;
+            border: 1px solid #333;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .main-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            text-align: center;
+            color: #d4af37; /* Gold color */
+            margin: 0 0 40px 0;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+
+        .menu-category {
+            padding: 20px;
+            border-top: 2px solid #d4af37;
+        }
+
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #EAEAEA;
+            margin-top: 0;
+            margin-bottom: 30px;
+            text-align: left;
+            letter-spacing: 1px;
+        }
+
+        .menu-item {
+            margin-bottom: 25px;
+        }
+
+        .item-name {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #f5f5f5;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .item-description {
+            font-size: 0.9rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #aaa;
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 10px;
+            }
+            .menu-board {
+                padding: 20px;
+            }
+            .main-title {
+                font-size: 2.5rem;
+            }
+            .category-title {
+                font-size: 1.8rem;
+            }
+            .menu-grid {
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="menu-board">
+        <h1 class="main-title">MENU</h1>
+
+        <div class="menu-grid">
+            
+            <div class="menu-category">
+                <h2 class="category-title">REFRESHING</h2>
+                
+                <div class="menu-item">
+                    <h3 class="item-name">GIN FIZZ</h3>
+                    <p class="item-description">gin, lemon juice, simple syrup, club soda</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">MOSCOW MULE</h3>
+                    <p class="item-description">vodka, lime juice, ginger ale</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">DARK ’N’ STORMY</h3>
+                    <p class="item-description">rum, lime juice, ginger ale</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">WHISKY HIGHBALL</h3>
+                    <p class="item-description">whisky, club soda</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">PALOMA</h3>
+                    <p class="item-description">tequila, lime juice, club soda</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">AMERICANO</h3>
+                    <p class="item-description">campari, sweet vermouth, club soda</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">CAMPARI SPRITZ</h3>
+                    <p class="item-description">campari, club soda, orange slice</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">LIMONCELLO SPRITZ</h3>
+                    <p class="item-description">limoncello, club soda</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">GIN BASIL SMASH</h3>
+                    <p class="item-description">gin, basil, lemon juice, simple syrup</p>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <h2 class="category-title">SWEET / CREAMY</h2>
+
+                <div class="menu-item">
+                    <h3 class="item-name">RUM MILK PUNCH</h3>
+                    <p class="item-description">white rum, milk, simple syrup, nutmeg</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">DISARONNO MILK</h3>
+                    <p class="item-description">disaronno, milk</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">GARIBALDI</h3>
+                    <p class="item-description">campari, orange juice</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">PINEAPPLE SCREWDRIVER</h3>
+                    <p class="item-description">vodka, orange juice, pineapple juice</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">ESPRESSO MARTINI</h3>
+                    <p class="item-description">vodka, espresso, baileys, simple syrup</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">BANANA DAIQUIRI</h3>
+                    <p class="item-description">white rum, banana liqueur, lime juice</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">BANANA BREAD</h3>
+                    <p class="item-description">whisky, banana liqueur, baileys</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">GRASSHOPPER</h3>
+                    <p class="item-description">creme de menthe, creme de cacao, baileys</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">IRISH COFFEE</h3>
+                    <p class="item-description">vodka, espresso, milk</p>
+                </div>
+            </div>
+
+            <div class="menu-category">
+                <h2 class="category-title">COMPLEX / BOOZY</h2>
+
+                <div class="menu-item">
+                    <h3 class="item-name">GIMLET</h3>
+                    <p class="item-description">gin, lime juice, simple syrup</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">DAIQUIRI</h3>
+                    <p class="item-description">white rum, lime juice, simple syrup</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">NEGRONI</h3>
+                    <p class="item-description">gin, campari, sweet vermouth</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">BOULEVARDIER</h3>
+                    <p class="item-description">whisky, campari, sweet vermouth</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">MANHATTAN</h3>
+                    <p class="item-description">whisky, sweet vermouth, aromatic bitters</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">BLACK MANHATTAN</h3>
+                    <p class="item-description">whisky, averna, aromatic bitters</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">OLD FASHIONED</h3>
+                    <p class="item-description">whisky, aromatic bitters, simple syrup</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">GOD FATHER</h3>
+                    <p class="item-description">whisky, disaronno</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">RUSTY NAIL</h3>
+                    <p class="item-description">whisky, drambuie</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">MEZCAL NEGRONI</h3>
+                    <p class="item-description">mezcal, campari, sweet vermouth</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">WHISKY SOUR</h3>
+                    <p class="item-description">whisky, lemon juice, simple syrup, angostura bitters</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">PENICILLIN</h3>
+                    <p class="item-description">whisky, honey syrup, lemon juice, peated whisky float</p>
+                </div>
+                <div class="menu-item">
+                    <h3 class="item-name">RUM OLD FASHIONED</h3>
+                    <p class="item-description">spiced rum, simple syrup, chocolate bitters</p>
+                </div>
+                 <div class="menu-item">
+                    <h3 class="item-name">FERNET MANHATTAN</h3>
+                    <p class="item-description">whisky, fernet branca, sweet vermouth</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+</html>
