@@ -1,5 +1,9 @@
 # 庚 Bar Menu
 
+
+#### sherry averna?
+26.03.07 Glengoyne 12 yrs + Averna
+
 #### OLD FASHIONED
 bourbon, simple syrup, angostura bitters, lemon & orange peel
 

@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: cocktail
+      POSTGRES_PASSWORD: cocktail
+      POSTGRES_DB: cocktail_db
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cocktail -d cocktail_db"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  backend:
+    build: ./backend
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - ./backend:/app
+      - media_data:/app/media
+      - ./stock.yaml:/data/stock.yaml:ro
+      - ./menu-all.md:/data/menu-all.md:ro
+      - ./recipe.md:/data/recipe.md:ro
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://cocktail:cocktail@db:5432/cocktail_db
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:
+  media_data:
