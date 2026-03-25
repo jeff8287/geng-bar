@@ -1,12 +1,25 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import { Routes, Route, Navigate } from 'react-router-dom'
+import { Toaster } from 'react-hot-toast'
 import { AuthProvider, useAuth } from './contexts/AuthContext'
+import { FavoritesProvider } from './contexts/FavoritesContext'
+import { ThemeProvider } from './contexts/ThemeContext'
+import ErrorBoundary from './components/ErrorBoundary'
 import LoginPage from './pages/LoginPage'
 import MenuPage from './pages/MenuPage'
 import CocktailDetailPage from './pages/CocktailDetailPage'
-import AdminDashboard from './pages/AdminDashboard'
-import AdminInventory from './pages/AdminInventory'
-import AdminCocktails from './pages/AdminCocktails'
+
+const AdminDashboard = React.lazy(() => import('./pages/AdminDashboard'))
+const AdminInventory = React.lazy(() => import('./pages/AdminInventory'))
+const AdminCocktails = React.lazy(() => import('./pages/AdminCocktails'))
+
+function LoadingSpinner() {
+  return (
+    <div className="min-h-screen bg-bar-bg flex items-center justify-center">
+      <div className="text-bar-gold text-4xl animate-pulse">🍸</div>
+    </div>
+  )
+}
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth()
@@ -48,7 +61,9 @@ function AppRoutes() {
         path="/admin"
         element={
           <RequireAdmin>
-            <AdminDashboard />
+            <Suspense fallback={<LoadingSpinner />}>
+              <AdminDashboard />
+            </Suspense>
           </RequireAdmin>
         }
       />
@@ -56,7 +71,9 @@ function AppRoutes() {
         path="/admin/inventory"
         element={
           <RequireAdmin>
-            <AdminInventory />
+            <Suspense fallback={<LoadingSpinner />}>
+              <AdminInventory />
+            </Suspense>
           </RequireAdmin>
         }
       />
@@ -64,7 +81,9 @@ function AppRoutes() {
         path="/admin/cocktails"
         element={
           <RequireAdmin>
-            <AdminCocktails />
+            <Suspense fallback={<LoadingSpinner />}>
+              <AdminCocktails />
+            </Suspense>
           </RequireAdmin>
         }
       />
@@ -75,8 +94,31 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <AppRoutes />
-    </AuthProvider>
+    <ErrorBoundary>
+      <ThemeProvider>
+      <AuthProvider>
+        <FavoritesProvider>
+        <AppRoutes />
+        <Toaster
+          position="bottom-center"
+          toastOptions={{
+            style: {
+              background: '#1a1a2e',
+              color: '#fff',
+              border: '1px solid #2a2a4a',
+              fontSize: '14px',
+            },
+            error: {
+              iconTheme: { primary: '#ef4444', secondary: '#fff' },
+            },
+            success: {
+              iconTheme: { primary: '#10b981', secondary: '#fff' },
+            },
+          }}
+        />
+      </FavoritesProvider>
+      </AuthProvider>
+      </ThemeProvider>
+    </ErrorBoundary>
   )
 }

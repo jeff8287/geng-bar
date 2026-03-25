@@ -1,76 +1,69 @@
-import { useState, useEffect } from 'react'
+import { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
+import {
+  BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer,
+  PieChart, Pie, Cell,
+} from 'recharts'
 import Header from '../components/layout/Header'
 import MobileNav from '../components/layout/MobileNav'
 import FilterModeToggle from '../components/admin/FilterModeToggle'
-import { getMenu } from '../api/cocktails'
-import { getIngredients } from '../api/ingredients'
-import client from '../api/client'
-import type { AppSettings } from '../types'
+import { useMenu } from '../hooks/useMenu'
+import { useIngredients } from '../hooks/useIngredients'
+import { useAdminSettings, useUpdateFilterMode } from '../hooks/useAdminSettings'
 
-interface Stats {
-  cocktails: number
-  available: number
-  ingredients: number
-  inStock: number
+const STOCK_COLORS = { in_stock: '#10b981', low: '#f59e0b', out_of_stock: '#ef4444' }
+const STOCK_LABELS: Record<string, string> = { in_stock: 'In Stock', low: 'Low', out_of_stock: 'Out of Stock' }
+const CHART_TOOLTIP_STYLE = {
+  backgroundColor: '#1a1a2e',
+  border: '1px solid #2a2a4a',
+  borderRadius: '8px',
+  color: '#fff',
+  fontSize: '12px',
 }
 
 export default function AdminDashboard() {
   const navigate = useNavigate()
-  const [stats, setStats] = useState<Stats>({ cocktails: 0, available: 0, ingredients: 0, inStock: 0 })
-  const [settings, setSettings] = useState<AppSettings | null>(null)
-  const [loading, setLoading] = useState(true)
-  const [savingMode, setSavingMode] = useState(false)
+  const { data: cocktails = [], isLoading: loadingCocktails } = useMenu()
+  const { data: ingredients = [], isLoading: loadingIngredients } = useIngredients()
+  const { data: settings } = useAdminSettings()
+  const updateMode = useUpdateFilterMode()
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const [cocktails, ingredients, settingsRes] = await Promise.allSettled([
-          getMenu(),
-          getIngredients(),
-          client.get<AppSettings>('/admin/settings'),
-        ])
-        if (cocktails.status === 'fulfilled') {
-          setStats((s) => ({
-            ...s,
-            cocktails: cocktails.value.length,
-            available: cocktails.value.filter((c) => c.is_available).length,
-          }))
-        }
-        if (ingredients.status === 'fulfilled') {
-          setStats((s) => ({
-            ...s,
-            ingredients: ingredients.value.length,
-            inStock: ingredients.value.filter((i) => i.status === 'in_stock').length,
-          }))
-        }
-        if (settingsRes.status === 'fulfilled') {
-          setSettings(settingsRes.value.data)
-        }
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadData()
-  }, [])
+  const loading = loadingCocktails || loadingIngredients
 
-  async function handleModeChange(mode: 'strict' | 'flexible') {
-    setSavingMode(true)
-    try {
-      const res = await client.patch<AppSettings>('/admin/settings', { filter_mode: mode })
-      setSettings(res.data)
-    } catch {
-      // silent
-    } finally {
-      setSavingMode(false)
-    }
+  const stats = {
+    cocktails: cocktails.length,
+    available: cocktails.filter((c) => c.is_available).length,
+    ingredients: ingredients.length,
+    inStock: ingredients.filter((i) => i.status === 'in_stock').length,
+  }
+
+  function handleModeChange(mode: 'strict' | 'flexible') {
+    updateMode.mutate(mode)
   }
 
   const statCards = [
     { label: 'Total Cocktails', value: stats.cocktails, sub: `${stats.available} available`, icon: '🍸' },
     { label: 'Ingredients', value: stats.ingredients, sub: `${stats.inStock} in stock`, icon: '📦' },
   ]
+
+  const categoryData = useMemo(() => {
+    const counts: Record<string, number> = {}
+    cocktails.forEach(c => {
+      const cat = c.category || 'uncategorized'
+      counts[cat] = (counts[cat] || 0) + 1
+    })
+    return Object.entries(counts).map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count)
+  }, [cocktails])
+
+  const stockData = useMemo(() => {
+    const counts: Record<string, number> = { in_stock: 0, low: 0, out_of_stock: 0 }
+    ingredients.forEach(i => { counts[i.status] = (counts[i.status] || 0) + 1 })
+    return Object.entries(counts)
+      .filter(([, v]) => v > 0)
+      .map(([status, value]) => ({ name: STOCK_LABELS[status], value, status }))
+  }, [ingredients])
 
   return (
     <div className="min-h-screen bg-bar-bg flex flex-col">
@@ -114,8 +107,52 @@ export default function AdminDashboard() {
             <FilterModeToggle
               mode={settings.filter_mode}
               onChange={handleModeChange}
-              loading={savingMode}
+              loading={updateMode.isPending}
             />
+          )}
+
+          {/* Charts */}
+          {!loading && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="card p-4">
+                <h3 className="text-sm font-medium text-gray-400 mb-3">Cocktails by Category</h3>
+                <div className="h-48">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={categoryData} margin={{ top: 0, right: 0, bottom: 0, left: -20 }}>
+                      <XAxis dataKey="name" tick={{ fill: '#9ca3af', fontSize: 10 }} axisLine={false} tickLine={false} />
+                      <YAxis tick={{ fill: '#9ca3af', fontSize: 10 }} axisLine={false} tickLine={false} allowDecimals={false} />
+                      <Tooltip contentStyle={CHART_TOOLTIP_STYLE} cursor={{ fill: 'rgba(212,167,106,0.1)' }} />
+                      <Bar dataKey="count" fill="#d4a76a" radius={[4, 4, 0, 0]} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+              <div className="card p-4">
+                <h3 className="text-sm font-medium text-gray-400 mb-3">Ingredient Stock Status</h3>
+                <div className="h-48">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <PieChart>
+                      <Pie
+                        data={stockData}
+                        dataKey="value"
+                        nameKey="name"
+                        cx="50%"
+                        cy="50%"
+                        innerRadius={40}
+                        outerRadius={70}
+                        paddingAngle={3}
+                        label={({ name, value }) => `${name}: ${value}`}
+                      >
+                        {stockData.map((entry) => (
+                          <Cell key={entry.status} fill={STOCK_COLORS[entry.status as keyof typeof STOCK_COLORS]} />
+                        ))}
+                      </Pie>
+                      <Tooltip contentStyle={CHART_TOOLTIP_STYLE} />
+                    </PieChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </div>
           )}
 
           {/* Quick actions */}

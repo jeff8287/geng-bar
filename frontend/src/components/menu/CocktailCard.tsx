@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import type { CocktailListItem } from '../../types'
 import AvailabilityBadge from './AvailabilityBadge'
+import { useFavoritesContext } from '../../contexts/FavoritesContext'
 
 const CATEGORY_GRADIENTS: Record<string, string> = {
   refreshing: 'from-cyan-900 to-blue-900',
@@ -37,7 +38,9 @@ interface CocktailCardProps {
 
 export default function CocktailCard({ cocktail }: CocktailCardProps) {
   const navigate = useNavigate()
+  const { isFavorite, toggle } = useFavoritesContext()
   const gradient = CATEGORY_GRADIENTS[cocktail.category ?? ''] ?? 'from-gray-800 to-gray-900'
+  const fav = isFavorite(cocktail.id)
 
   return (
     <motion.div
@@ -50,10 +53,21 @@ export default function CocktailCard({ cocktail }: CocktailCardProps) {
     >
       {/* Image or gradient placeholder */}
       <div className={`h-36 bg-gradient-to-br ${gradient} relative overflow-hidden`}>
+        {/* Favorite button */}
+        <button
+          onClick={(e) => { e.stopPropagation(); toggle(cocktail.id) }}
+          className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-black/50 flex items-center justify-center hover:bg-black/70 transition-colors"
+          aria-label={fav ? 'Remove from favorites' : 'Add to favorites'}
+        >
+          <span className={`text-sm ${fav ? 'text-red-400' : 'text-gray-400'}`}>
+            {fav ? '♥' : '♡'}
+          </span>
+        </button>
         {cocktail.image_url ? (
           <img
             src={cocktail.image_url}
             alt={cocktail.name}
+            loading="lazy"
             className="w-full h-full object-cover"
           />
         ) : (

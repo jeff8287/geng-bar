@@ -1,0 +1,88 @@
+{
+  "app": {
+    "title": "庚 Bar",
+    "subtitle": "Home Cocktail Bar"
+  },
+  "nav": {
+    "menu": "Menu",
+    "admin": "Admin",
+    "exit": "Exit"
+  },
+  "login": {
+    "welcome": "Welcome! How would you like to continue?",
+    "guestButton": "Guest — Browse Menu",
+    "adminButton": "Admin — Manage Bar",
+    "nickname": "Your nickname",
+    "nicknamePlaceholder": "e.g. Alex, Party Queen...",
+    "username": "Username",
+    "password": "Password",
+    "enterBar": "Enter the Bar",
+    "entering": "Entering...",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "back": "Back",
+    "loginError": "Could not login. Please try again.",
+    "footer": "Drink responsibly. Enjoy the night."
+  },
+  "menu": {
+    "searchPlaceholder": "Search cocktails...",
+    "availableOnly": "Available only",
+    "favorites": "Favorites",
+    "refresh": "Refresh",
+    "noResults": "No cocktails found",
+    "noResultsHint": "Try adjusting your filters",
+    "cocktail": "cocktail",
+    "cocktails": "cocktails",
+    "errorLoad": "Could not load menu. Please try again."
+  },
+  "detail": {
+    "ingredients": "Ingredients",
+    "instructions": "Instructions",
+    "flavorProfile": "Flavor Profile",
+    "garnish": "Garnish",
+    "reviews": "Reviews",
+    "loading": "Loading...",
+    "error": "Error",
+    "notFound": "Cocktail not found.",
+    "errorLoad": "Could not load cocktail details."
+  },
+  "review": {
+    "leaveReview": "Leave a Review",
+    "reviewingAs": "Reviewing as",
+    "rating": "Rating",
+    "comment": "Comment (optional)",
+    "commentPlaceholder": "What did you think?",
+    "submit": "Submit Review",
+    "submitting": "Submitting...",
+    "selectRating": "Please select a rating.",
+    "submitError": "Could not submit review. Please try again.",
+    "thanks": "Thanks for your review!",
+    "noReviews": "No reviews yet. Be the first!"
+  },
+  "admin": {
+    "dashboard": "Dashboard",
+    "welcomeBack": "Welcome back, Admin",
+    "totalCocktails": "Total Cocktails",
+    "ingredientsLabel": "Ingredients",
+    "available": "available",
+    "inStock": "in stock",
+    "quickActions": "Quick Actions",
+    "manageInventory": "Manage Inventory",
+    "manageInventoryDesc": "Update ingredient stock levels",
+    "manageCocktails": "Manage Cocktails",
+    "manageCocktailsDesc": "Add, edit, or remove cocktails",
+    "viewGuestMenu": "View Guest Menu",
+    "viewGuestMenuDesc": "See what guests see",
+    "cocktailsByCategory": "Cocktails by Category",
+    "stockStatus": "Ingredient Stock Status"
+  },
+  "common": {
+    "save": "Save",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "add": "Add",
+    "edit": "Edit",
+    "optional": "optional"
+  }
+}

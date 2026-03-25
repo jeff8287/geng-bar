@@ -1,4 +1,3 @@
-import { useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Header from '../components/layout/Header'
@@ -7,35 +6,28 @@ import FlavorChart from '../components/menu/FlavorChart'
 import StarRating from '../components/reviews/StarRating'
 import ReviewList from '../components/reviews/ReviewList'
 import ReviewForm from '../components/reviews/ReviewForm'
-import { getCocktailDetail } from '../api/cocktails'
-import { getReviews } from '../api/reviews'
-import type { CocktailDetail, Review } from '../types'
+import { useCocktailDetail } from '../hooks/useCocktailDetail'
+import { useReviews } from '../hooks/useReviews'
+import { useIngredients } from '../hooks/useIngredients'
+import AvailabilityBadge from '../components/menu/AvailabilityBadge'
+
+function parseSteps(instructions: string): string[] {
+  const byNewline = instructions.split(/\n+/).map(s => s.trim()).filter(Boolean)
+  if (byNewline.length > 1) return byNewline
+  const byNumber = instructions.split(/(?=\d+\.\s)/).map(s => s.trim()).filter(Boolean)
+  if (byNumber.length > 1) return byNumber
+  return byNewline
+}
 
 export default function CocktailDetailPage() {
   const { id } = useParams<{ id: string }>()
-  const [cocktail, setCocktail] = useState<CocktailDetail | null>(null)
-  const [reviews, setReviews] = useState<Review[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+  const numId = id ? Number(id) : undefined
+  const { data: cocktail, isLoading: loading, error: cocktailError } = useCocktailDetail(numId)
+  const { data: reviews = [] } = useReviews(numId)
+  const { data: allIngredients = [] } = useIngredients({ refetchInterval: 30_000 })
+  const error = cocktailError ? 'Could not load cocktail details.' : ''
 
-  const fetchDetail = useCallback(async () => {
-    if (!id) return
-    try {
-      const data = await getCocktailDetail(Number(id))
-      setCocktail(data)
-      const reviewData = await getReviews(Number(id))
-      setReviews(reviewData)
-      setError('')
-    } catch {
-      setError('Could not load cocktail details.')
-    } finally {
-      setLoading(false)
-    }
-  }, [id])
-
-  useEffect(() => {
-    fetchDetail()
-  }, [fetchDetail])
+  const ingredientStockMap = new Map(allIngredients.map(i => [i.id, i.status]))
 
   if (loading) {
     return (
@@ -74,7 +66,7 @@ export default function CocktailDetailPage() {
           {/* Hero */}
           <div className="relative h-52 sm:h-64 bg-gradient-to-br from-bar-card to-bar-bg overflow-hidden">
             {cocktail.image_url ? (
-              <img src={cocktail.image_url} alt={cocktail.name} className="w-full h-full object-cover" />
+              <img src={cocktail.image_url} alt={cocktail.name} loading="lazy" className="w-full h-full object-cover" />
             ) : (
               <div className="absolute inset-0 flex items-center justify-center">
                 <span className="text-8xl opacity-20">🍸</span>
@@ -123,24 +115,30 @@ export default function CocktailDetailPage() {
                 Ingredients ({cocktail.ingredients.length})
               </h2>
               <div className="space-y-2">
-                {cocktail.ingredients.map((ing) => (
-                  <div
-                    key={`${ing.ingredient_id}`}
-                    className="flex items-center justify-between py-2 border-b border-bar-border last:border-0"
-                  >
-                    <span className="text-white text-sm">
-                      {ing.ingredient_name ?? `Ingredient #${ing.ingredient_id}`}
-                      {ing.is_optional && (
-                        <span className="text-gray-600 text-xs ml-1">(optional)</span>
+                {cocktail.ingredients.map((ing) => {
+                  const stock = ingredientStockMap.get(ing.ingredient_id)
+                  return (
+                    <div
+                      key={`${ing.ingredient_id}`}
+                      className="flex items-center justify-between py-2 border-b border-bar-border last:border-0"
+                    >
+                      <div className="flex items-center gap-2 min-w-0">
+                        <span className="text-white text-sm">
+                          {ing.ingredient_name ?? `Ingredient #${ing.ingredient_id}`}
+                          {ing.is_optional && (
+                            <span className="text-gray-600 text-xs ml-1">(optional)</span>
+                          )}
+                        </span>
+                        {stock && <AvailabilityBadge available={stock !== 'out_of_stock'} size="sm" label={stock === 'low' ? 'Low' : undefined} />}
+                      </div>
+                      {ing.amount && (
+                        <span className="text-gray-400 text-sm shrink-0">
+                          {ing.amount} {ing.unit}
+                        </span>
                       )}
-                    </span>
-                    {ing.amount && (
-                      <span className="text-gray-400 text-sm shrink-0">
-                        {ing.amount} {ing.unit}
-                      </span>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  )
+                })}
               </div>
             </section>
 
@@ -149,9 +147,16 @@ export default function CocktailDetailPage() {
               <section className="mb-6">
                 <h2 className="text-bar-gold font-semibold text-sm uppercase tracking-wider mb-3">Instructions</h2>
                 <div className="card p-4">
-                  <p className="text-gray-300 text-sm leading-relaxed whitespace-pre-wrap">
-                    {cocktail.instructions}
-                  </p>
+                  <ol className="space-y-3">
+                    {parseSteps(cocktail.instructions).map((step, i) => (
+                      <li key={i} className="flex gap-3">
+                        <span className="text-bar-gold font-bold text-sm shrink-0 w-6 h-6 rounded-full bg-bar-gold/10 flex items-center justify-center">
+                          {i + 1}
+                        </span>
+                        <p className="text-gray-300 text-sm leading-relaxed">{step.replace(/^\d+\.\s*/, '')}</p>
+                      </li>
+                    ))}
+                  </ol>
                 </div>
               </section>
             )}
@@ -179,7 +184,7 @@ export default function CocktailDetailPage() {
             {/* Reviews */}
             <section className="mb-6">
               <h2 className="text-bar-gold font-semibold text-sm uppercase tracking-wider mb-3">Reviews</h2>
-              <ReviewForm cocktailId={cocktail.id} onReviewAdded={fetchDetail} />
+              <ReviewForm cocktailId={cocktail.id} />
               <div className="mt-4">
                 <ReviewList reviews={reviews} />
               </div>

@@ -1,0 +1,88 @@
+{
+  "app": {
+    "title": "庚 Bar",
+    "subtitle": "홈 칵테일 바"
+  },
+  "nav": {
+    "menu": "메뉴",
+    "admin": "관리",
+    "exit": "나가기"
+  },
+  "login": {
+    "welcome": "환영합니다! 어떻게 이용하시겠어요?",
+    "guestButton": "게스트 — 메뉴 보기",
+    "adminButton": "관리자 — 바 관리",
+    "nickname": "닉네임",
+    "nicknamePlaceholder": "예: Alex, 파티퀸...",
+    "username": "아이디",
+    "password": "비밀번호",
+    "enterBar": "입장하기",
+    "entering": "입장 중...",
+    "signIn": "로그인",
+    "signingIn": "로그인 중...",
+    "back": "뒤로",
+    "loginError": "로그인에 실패했습니다. 다시 시도해주세요.",
+    "footer": "책임감 있게 마시고, 밤을 즐기세요."
+  },
+  "menu": {
+    "searchPlaceholder": "칵테일 검색...",
+    "availableOnly": "주문 가능만",
+    "favorites": "즐겨찾기",
+    "refresh": "새로고침",
+    "noResults": "칵테일을 찾을 수 없습니다",
+    "noResultsHint": "필터를 조정해보세요",
+    "cocktail": "개",
+    "cocktails": "개",
+    "errorLoad": "메뉴를 불러올 수 없습니다. 다시 시도해주세요."
+  },
+  "detail": {
+    "ingredients": "재료",
+    "instructions": "만드는 법",
+    "flavorProfile": "맛 프로필",
+    "garnish": "가니시",
+    "reviews": "리뷰",
+    "loading": "로딩 중...",
+    "error": "오류",
+    "notFound": "칵테일을 찾을 수 없습니다.",
+    "errorLoad": "칵테일 정보를 불러올 수 없습니다."
+  },
+  "review": {
+    "leaveReview": "리뷰 남기기",
+    "reviewingAs": "작성자",
+    "rating": "별점",
+    "comment": "코멘트 (선택)",
+    "commentPlaceholder": "어떠셨나요?",
+    "submit": "리뷰 등록",
+    "submitting": "등록 중...",
+    "selectRating": "별점을 선택해주세요.",
+    "submitError": "리뷰 등록에 실패했습니다. 다시 시도해주세요.",
+    "thanks": "리뷰 감사합니다!",
+    "noReviews": "아직 리뷰가 없습니다. 첫 번째 리뷰를 남겨주세요!"
+  },
+  "admin": {
+    "dashboard": "대시보드",
+    "welcomeBack": "어서오세요, 관리자님",
+    "totalCocktails": "전체 칵테일",
+    "ingredientsLabel": "재료",
+    "available": "주문 가능",
+    "inStock": "재고 있음",
+    "quickActions": "빠른 작업",
+    "manageInventory": "재고 관리",
+    "manageInventoryDesc": "재료 재고 상태 업데이트",
+    "manageCocktails": "칵테일 관리",
+    "manageCocktailsDesc": "칵테일 추가, 수정, 삭제",
+    "viewGuestMenu": "게스트 메뉴 보기",
+    "viewGuestMenuDesc": "손님에게 보이는 화면 확인",
+    "cocktailsByCategory": "카테고리별 칵테일",
+    "stockStatus": "재료 재고 현황"
+  },
+  "common": {
+    "save": "저장",
+    "saving": "저장 중...",
+    "cancel": "취소",
+    "delete": "삭제",
+    "add": "추가",
+    "edit": "수정",
+    "optional": "선택"
+  }
+}

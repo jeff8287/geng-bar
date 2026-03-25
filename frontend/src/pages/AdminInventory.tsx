@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
 import Header from '../components/layout/Header'
 import MobileNav from '../components/layout/MobileNav'
 import InventoryTable from '../components/admin/InventoryTable'
-import { getIngredients, createIngredient, updateIngredient } from '../api/ingredients'
-import type { Ingredient } from '../types'
+import Modal from '../components/ui/Modal'
+import Button from '../components/ui/Button'
+import { useIngredients, useCreateIngredient, useUpdateIngredient } from '../hooks/useIngredients'
 
 interface CreateIngredientPayload {
   name: string
@@ -23,28 +24,17 @@ const EMPTY_FORM: CreateIngredientPayload = {
 }
 
 export default function AdminInventory() {
-  const [ingredients, setIngredients] = useState<Ingredient[]>([])
-  const [loading, setLoading] = useState(true)
+  const { data: ingredients = [], isLoading: loading, dataUpdatedAt } = useIngredients({ refetchInterval: 30_000 })
+  const createMutation = useCreateIngredient()
+  const updateMutation = useUpdateIngredient()
   const [filterCategory, setFilterCategory] = useState('all')
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [form, setForm] = useState<CreateIngredientPayload>(EMPTY_FORM)
-  const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
 
-  async function fetchIngredients() {
-    try {
-      const data = await getIngredients()
-      setIngredients(data)
-    } catch {
-      setError('Could not load ingredients.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => { fetchIngredients() }, [])
+  const saving = createMutation.isPending || updateMutation.isPending
 
   function openAddForm() {
     setEditingId(null)
@@ -56,20 +46,16 @@ export default function AdminInventory() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault()
     if (!form.name.trim()) return
-    setSaving(true)
     setError('')
     try {
       if (editingId !== null) {
-        await updateIngredient(editingId, form)
+        await updateMutation.mutateAsync({ id: editingId, payload: form })
       } else {
-        await createIngredient(form)
+        await createMutation.mutateAsync(form)
       }
       setShowForm(false)
-      fetchIngredients()
     } catch {
       setError('Could not save ingredient.')
-    } finally {
-      setSaving(false)
     }
   }
 
@@ -120,11 +106,18 @@ export default function AdminInventory() {
           </div>
 
           {/* Summary */}
-          <div className="px-4 pb-2 text-xs text-gray-500">
-            {displayed.length} ingredient{displayed.length !== 1 ? 's' : ''}
-            {' '}· {displayed.filter((i) => i.status === 'in_stock').length} in stock
-            {' '}· {displayed.filter((i) => i.status === 'low').length} low
-            {' '}· {displayed.filter((i) => i.status === 'out_of_stock').length} out
+          <div className="px-4 pb-2 flex items-center justify-between text-xs text-gray-500">
+            <span>
+              {displayed.length} ingredient{displayed.length !== 1 ? 's' : ''}
+              {' '}· {displayed.filter((i) => i.status === 'in_stock').length} in stock
+              {' '}· {displayed.filter((i) => i.status === 'low').length} low
+              {' '}· {displayed.filter((i) => i.status === 'out_of_stock').length} out
+            </span>
+            {dataUpdatedAt > 0 && (
+              <span className="text-gray-600">
+                Updated {new Date(dataUpdatedAt).toLocaleTimeString()}
+              </span>
+            )}
           </div>
 
           {/* Table */}
@@ -134,28 +127,16 @@ export default function AdminInventory() {
             ) : (
               <InventoryTable
                 ingredients={displayed}
-                onUpdate={fetchIngredients}
               />
             )}
           </div>
 
           {/* Add/Edit Form Modal */}
-          {showForm && (
-            <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
-              <div
-                className="absolute inset-0 bg-black/70 backdrop-blur-sm"
-                onClick={() => setShowForm(false)}
-              />
-              <motion.div
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 40 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-                className="relative w-full max-w-md bg-bar-card border border-bar-border rounded-t-2xl sm:rounded-2xl p-6 z-10"
-              >
-                <h3 className="font-semibold text-white mb-4">
-                  {editingId !== null ? 'Edit Ingredient' : 'Add Ingredient'}
-                </h3>
+          <Modal
+            open={showForm}
+            onClose={() => setShowForm(false)}
+            title={editingId !== null ? 'Edit Ingredient' : 'Add Ingredient'}
+          >
                 <form onSubmit={handleSave} className="space-y-3">
                   <div>
                     <label className="block text-xs text-gray-400 mb-1">Name *</label>
@@ -219,25 +200,15 @@ export default function AdminInventory() {
                   </div>
                   {error && <p className="text-red-400 text-xs">{error}</p>}
                   <div className="flex gap-3 pt-2">
-                    <button
-                      type="button"
-                      onClick={() => setShowForm(false)}
-                      className="flex-1 btn-ghost border border-bar-border"
-                    >
+                    <Button type="button" variant="ghost" onClick={() => setShowForm(false)} className="flex-1 border border-bar-border">
                       Cancel
-                    </button>
-                    <button
-                      type="submit"
-                      disabled={saving || !form.name.trim()}
-                      className="flex-1 btn-gold"
-                    >
+                    </Button>
+                    <Button type="submit" disabled={saving || !form.name.trim()} className="flex-1">
                       {saving ? 'Saving...' : 'Save'}
-                    </button>
+                    </Button>
                   </div>
                 </form>
-              </motion.div>
-            </div>
-          )}
+          </Modal>
         </motion.div>
       </main>
       <MobileNav />

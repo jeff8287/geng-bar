@@ -8,9 +8,33 @@
     -webkit-tap-highlight-color: transparent;
   }
 
+  html.light {
+    @apply bg-gray-50 text-gray-900;
+  }
+
   body {
     @apply bg-bar-bg text-white min-h-screen font-sans;
     overscroll-behavior: none;
+  }
+
+  .light body {
+    @apply bg-gray-50 text-gray-900;
+  }
+
+  .light .card {
+    @apply bg-white border-gray-200;
+  }
+
+  .light .input-field {
+    @apply bg-white border-gray-300 text-gray-900 placeholder-gray-400;
+  }
+
+  .light .btn-ghost {
+    @apply text-gray-600 hover:text-gray-900 hover:bg-gray-100;
+  }
+
+  .light header {
+    @apply bg-gray-50 border-gray-200;
   }
 
   * {

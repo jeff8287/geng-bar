@@ -1,51 +1,53 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Header from '../components/layout/Header'
 import MobileNav from '../components/layout/MobileNav'
 import FilterBar from '../components/menu/FilterBar'
 import CocktailGrid from '../components/menu/CocktailGrid'
-import { getMenu } from '../api/cocktails'
-import type { CocktailListItem, MenuFilters } from '../types'
+import { useMenu } from '../hooks/useMenu'
+import { useTranslation } from 'react-i18next'
+import { useDebounce } from '../hooks/useDebounce'
+import { useFavoritesContext } from '../contexts/FavoritesContext'
+import type { MenuFilters } from '../types'
 
-const REFRESH_INTERVAL = 30_000
+function paramsToFilters(params: URLSearchParams): MenuFilters {
+  return {
+    category: params.get('category') || undefined,
+    search: params.get('search') || undefined,
+    available_only: params.get('available_only') === 'true' || undefined,
+    favorites_only: params.get('favorites_only') === 'true' || undefined,
+  }
+}
+
+function filtersToParams(filters: MenuFilters): URLSearchParams {
+  const params = new URLSearchParams()
+  if (filters.category) params.set('category', filters.category)
+  if (filters.search) params.set('search', filters.search)
+  if (filters.available_only) params.set('available_only', 'true')
+  if (filters.favorites_only) params.set('favorites_only', 'true')
+  return params
+}
 
 export default function MenuPage() {
-  const [cocktails, setCocktails] = useState<CocktailListItem[]>([])
-  const [filters, setFilters] = useState<MenuFilters>({})
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
-  const [lastRefresh, setLastRefresh] = useState(Date.now())
+  const [searchParams, setSearchParams] = useSearchParams()
+  const filters = paramsToFilters(searchParams)
+  const { favorites_only, ...apiFilters } = filters
+  const debouncedApiFilters = useDebounce(apiFilters, 300)
+  const { data: cocktails = [], isLoading: loading, error, dataUpdatedAt, refetch } = useMenu(debouncedApiFilters)
+  const { isFavorite } = useFavoritesContext()
+  const { t } = useTranslation()
 
-  const fetchMenu = useCallback(async () => {
-    try {
-      const data = await getMenu(filters)
-      setCocktails(data)
-      setError('')
-    } catch {
-      setError('Could not load menu. Please try again.')
-    } finally {
-      setLoading(false)
-    }
-  }, [filters])
+  const displayedCocktails = favorites_only
+    ? cocktails.filter(c => isFavorite(c.id))
+    : cocktails
 
-  useEffect(() => {
-    setLoading(true)
-    fetchMenu()
-  }, [fetchMenu])
-
-  // Auto-refresh every 30 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setLastRefresh(Date.now())
-      fetchMenu()
-    }, REFRESH_INTERVAL)
-    return () => clearInterval(interval)
-  }, [fetchMenu])
+  const setFilters = useCallback((newFilters: MenuFilters) => {
+    setSearchParams(filtersToParams(newFilters), { replace: true })
+  }, [setSearchParams])
 
   function handleRefresh() {
-    setLoading(true)
-    setLastRefresh(Date.now())
-    fetchMenu()
+    refetch()
   }
 
   return (
@@ -57,28 +59,28 @@ export default function MenuPage() {
         {/* Refresh indicator */}
         <div className="flex items-center justify-between px-4 pt-3 pb-1">
           <motion.p
-            key={lastRefresh}
+            key={dataUpdatedAt}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             className="text-gray-600 text-xs"
           >
-            {cocktails.length} cocktail{cocktails.length !== 1 ? 's' : ''}
+            {displayedCocktails.length} cocktail{displayedCocktails.length !== 1 ? 's' : ''}
           </motion.p>
           <button
             onClick={handleRefresh}
             className="text-gray-500 hover:text-bar-gold transition-colors text-xs"
           >
-            ↻ Refresh
+            ↻ {t('menu.refresh')}
           </button>
         </div>
 
         {error && (
           <div className="mx-4 mt-2 p-3 bg-red-900/30 border border-red-700 rounded-lg text-red-400 text-sm">
-            {error}
+            {t('menu.errorLoad')}
           </div>
         )}
 
-        <CocktailGrid cocktails={cocktails} loading={loading} />
+        <CocktailGrid cocktails={displayedCocktails} loading={loading} />
       </main>
 
       <MobileNav />

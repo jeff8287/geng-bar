@@ -1,6 +1,5 @@
 import type { Ingredient } from '../../types'
-import { updateIngredientStatus } from '../../api/ingredients'
-import { useState } from 'react'
+import { useUpdateIngredientStatus } from '../../hooks/useIngredients'
 
 const STATUS_CONFIG = {
   in_stock: { label: 'In Stock', classes: 'bg-emerald-900/40 text-emerald-400 border-emerald-700' },
@@ -16,28 +15,19 @@ const STATUS_CYCLE: Record<string, 'in_stock' | 'low' | 'out_of_stock'> = {
 
 interface InventoryTableProps {
   ingredients: Ingredient[]
-  onUpdate: () => void
   filterCategory?: string
 }
 
-export default function InventoryTable({ ingredients, onUpdate, filterCategory }: InventoryTableProps) {
-  const [updating, setUpdating] = useState<number | null>(null)
+export default function InventoryTable({ ingredients, filterCategory }: InventoryTableProps) {
+  const statusMutation = useUpdateIngredientStatus()
 
   const filtered = filterCategory && filterCategory !== 'all'
     ? ingredients.filter((i) => i.category === filterCategory)
     : ingredients
 
-  async function handleStatusToggle(ingredient: Ingredient) {
+  function handleStatusToggle(ingredient: Ingredient) {
     const nextStatus = STATUS_CYCLE[ingredient.status]
-    setUpdating(ingredient.id)
-    try {
-      await updateIngredientStatus(ingredient.id, nextStatus)
-      onUpdate()
-    } catch {
-      // silent fail
-    } finally {
-      setUpdating(null)
-    }
+    statusMutation.mutate({ id: ingredient.id, status: nextStatus })
   }
 
   if (filtered.length === 0) {
@@ -62,7 +52,7 @@ export default function InventoryTable({ ingredients, onUpdate, filterCategory }
         <tbody className="divide-y divide-bar-border">
           {filtered.map((ingredient) => {
             const config = STATUS_CONFIG[ingredient.status]
-            const isUpdating = updating === ingredient.id
+            const isUpdating = statusMutation.isPending && statusMutation.variables?.id === ingredient.id
             return (
               <tr key={ingredient.id} className="hover:bg-bar-card/50 transition-colors">
                 <td className="py-3 px-3 text-white font-medium">{ingredient.name}</td>

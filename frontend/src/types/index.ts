@@ -88,4 +88,5 @@ export interface MenuFilters {
   category?: string
   search?: string
   available_only?: boolean
+  favorites_only?: boolean
 }

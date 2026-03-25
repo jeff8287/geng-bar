@@ -1,18 +1,17 @@
 import { useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
-import { createReview } from '../../api/reviews'
+import { useCreateReview } from '../../hooks/useReviews'
 import StarRating from './StarRating'
 
 interface ReviewFormProps {
   cocktailId: number
-  onReviewAdded: () => void
 }
 
-export default function ReviewForm({ cocktailId, onReviewAdded }: ReviewFormProps) {
+export default function ReviewForm({ cocktailId }: ReviewFormProps) {
   const { user } = useAuth()
+  const createReview = useCreateReview(cocktailId)
   const [rating, setRating] = useState(0)
   const [comment, setComment] = useState('')
-  const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [submitted, setSubmitted] = useState(false)
 
@@ -24,19 +23,15 @@ export default function ReviewForm({ cocktailId, onReviewAdded }: ReviewFormProp
       setError('Please select a rating.')
       return
     }
-    setLoading(true)
     setError('')
     try {
-      await createReview(cocktailId, {
+      await createReview.mutateAsync({
         rating,
         comment: comment.trim() || undefined,
       })
       setSubmitted(true)
-      onReviewAdded()
     } catch {
       setError('Could not submit review. Please try again.')
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -74,10 +69,10 @@ export default function ReviewForm({ cocktailId, onReviewAdded }: ReviewFormProp
         {error && <p className="text-red-400 text-xs">{error}</p>}
         <button
           type="submit"
-          disabled={loading || rating === 0}
+          disabled={createReview.isPending || rating === 0}
           className="w-full btn-gold py-2.5 text-sm"
         >
-          {loading ? 'Submitting...' : 'Submit Review'}
+          {createReview.isPending ? 'Submitting...' : 'Submit Review'}
         </button>
       </form>
     </div>

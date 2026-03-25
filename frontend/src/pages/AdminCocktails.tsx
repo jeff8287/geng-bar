@@ -1,12 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Header from '../components/layout/Header'
 import MobileNav from '../components/layout/MobileNav'
 import AvailabilityBadge from '../components/menu/AvailabilityBadge'
-import { getMenu, createCocktail, updateCocktail, deleteCocktail } from '../api/cocktails'
-import { getIngredients } from '../api/ingredients'
-import type { CocktailListItem, Ingredient } from '../types'
+import { useMenu } from '../hooks/useMenu'
+import { useIngredients } from '../hooks/useIngredients'
+import { useCreateCocktail, useUpdateCocktail, useDeleteCocktail } from '../hooks/useCocktailAdmin'
 
 interface CreateCocktailPayload {
   name: string
@@ -38,31 +38,20 @@ const EMPTY_FORM: Omit<CreateCocktailPayload, 'ingredients'> = {
 
 export default function AdminCocktails() {
   const navigate = useNavigate()
-  const [cocktails, setCocktails] = useState<CocktailListItem[]>([])
-  const [allIngredients, setAllIngredients] = useState<Ingredient[]>([])
-  const [loading, setLoading] = useState(true)
+  const { data: cocktails = [], isLoading: loading } = useMenu()
+  const { data: allIngredients = [] } = useIngredients()
+  const createMutation = useCreateCocktail()
+  const updateMutation = useUpdateCocktail()
+  const deleteMutation = useDeleteCocktail()
   const [showForm, setShowForm] = useState(false)
   const [editingId, setEditingId] = useState<number | null>(null)
   const [form, setForm] = useState<Omit<CreateCocktailPayload, 'ingredients'>>(EMPTY_FORM)
   const [ingredientEntries, setIngredientEntries] = useState<IngredientEntry[]>([])
-  const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
   const [search, setSearch] = useState('')
   const [deleteConfirm, setDeleteConfirm] = useState<number | null>(null)
 
-  async function fetchData() {
-    try {
-      const [cocktailData, ingredientData] = await Promise.all([getMenu(), getIngredients()])
-      setCocktails(cocktailData)
-      setAllIngredients(ingredientData)
-    } catch {
-      setError('Could not load data.')
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  useEffect(() => { fetchData() }, [])
+  const saving = createMutation.isPending || updateMutation.isPending
 
   function openAddForm() {
     setEditingId(null)
@@ -93,29 +82,24 @@ export default function AdminCocktails() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault()
     if (!form.name.trim()) return
-    setSaving(true)
     setError('')
     try {
       const payload: CreateCocktailPayload = { ...form, ingredients: ingredientEntries }
       if (editingId !== null) {
-        await updateCocktail(editingId, payload)
+        await updateMutation.mutateAsync({ id: editingId, payload })
       } else {
-        await createCocktail(payload)
+        await createMutation.mutateAsync(payload)
       }
       setShowForm(false)
-      fetchData()
     } catch {
       setError('Could not save cocktail.')
-    } finally {
-      setSaving(false)
     }
   }
 
   async function handleDelete(id: number) {
     try {
-      await deleteCocktail(id)
+      await deleteMutation.mutateAsync(id)
       setDeleteConfirm(null)
-      fetchData()
     } catch {
       setError('Could not delete cocktail.')
     }
