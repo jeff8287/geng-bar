@@ -9,6 +9,7 @@ import ReviewForm from '../components/reviews/ReviewForm'
 import { useCocktailDetail } from '../hooks/useCocktailDetail'
 import { useReviews } from '../hooks/useReviews'
 import { useIngredients } from '../hooks/useIngredients'
+import { useAuth } from '../contexts/AuthContext'
 import AvailabilityBadge from '../components/menu/AvailabilityBadge'
 
 function parseSteps(instructions: string): string[] {
@@ -22,9 +23,10 @@ function parseSteps(instructions: string): string[] {
 export default function CocktailDetailPage() {
   const { id } = useParams<{ id: string }>()
   const numId = id ? Number(id) : undefined
+  const { isAdmin } = useAuth()
   const { data: cocktail, isLoading: loading, error: cocktailError } = useCocktailDetail(numId)
   const { data: reviews = [] } = useReviews(numId)
-  const { data: allIngredients = [] } = useIngredients({ refetchInterval: 30_000 })
+  const { data: allIngredients = [] } = useIngredients({ refetchInterval: 30_000, enabled: isAdmin })
   const error = cocktailError ? 'Could not load cocktail details.' : ''
 
   const ingredientStockMap = new Map(allIngredients.map(i => [i.id, i.status]))

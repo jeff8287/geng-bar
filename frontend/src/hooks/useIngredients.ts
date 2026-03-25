@@ -7,11 +7,12 @@ import {
   updateIngredientStatus,
 } from '../api/ingredients'
 
-export function useIngredients(options?: { refetchInterval?: number }) {
+export function useIngredients(options?: { refetchInterval?: number; enabled?: boolean }) {
   return useQuery({
     queryKey: ['ingredients'],
     queryFn: getIngredients,
     refetchInterval: options?.refetchInterval,
+    enabled: options?.enabled ?? true,
   })
 }
 

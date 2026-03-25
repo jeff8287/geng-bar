@@ -37,10 +37,17 @@ function RequireAdmin({ children }: { children: React.ReactNode }) {
   return <>{children}</>
 }
 
+function RedirectIfAuth({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated } = useAuth()
+  const hasStoredToken = !!localStorage.getItem('token') && !!localStorage.getItem('user')
+  if (isAuthenticated || hasStoredToken) return <Navigate to="/menu" replace />
+  return <>{children}</>
+}
+
 function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<LoginPage />} />
+      <Route path="/" element={<RedirectIfAuth><LoginPage /></RedirectIfAuth>} />
       <Route
         path="/menu"
         element={
@@ -98,7 +105,9 @@ export default function App() {
       <ThemeProvider>
       <AuthProvider>
         <FavoritesProvider>
+        <Suspense fallback={<LoadingSpinner />}>
         <AppRoutes />
+        </Suspense>
         <Toaster
           position="bottom-center"
           toastOptions={{

@@ -1,4 +1,4 @@
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import Header from '../components/layout/Header'
@@ -32,9 +32,14 @@ function filtersToParams(filters: MenuFilters): URLSearchParams {
 export default function MenuPage() {
   const [searchParams, setSearchParams] = useSearchParams()
   const filters = paramsToFilters(searchParams)
-  const { favorites_only, ...apiFilters } = filters
-  const debouncedApiFilters = useDebounce(apiFilters, 300)
-  const { data: cocktails = [], isLoading: loading, error, dataUpdatedAt, refetch } = useMenu(debouncedApiFilters)
+  const { favorites_only, category, search, available_only } = filters
+  const debouncedSearch = useDebounce(search, 300)
+  const apiFilters = useMemo(() => ({
+    category,
+    search: debouncedSearch,
+    available_only,
+  }), [category, debouncedSearch, available_only])
+  const { data: cocktails = [], isLoading: loading, error, dataUpdatedAt, refetch } = useMenu(apiFilters)
   const { isFavorite } = useFavoritesContext()
   const { t } = useTranslation()
 
