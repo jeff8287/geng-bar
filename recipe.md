@@ -394,12 +394,14 @@
 * 2 oz whisky
 * 1 oz averna
 * 2 dashes angostura bitters
+* 1 dash orange bitters
 * garnish: cherry
 
 #### FERNET MANHATTAN
 * 2 oz whisky
-* 1/2 oz fernet branca
-* 1/2 oz sweet vermouth
+* 1 oz sweet vermouth
+* 1/4 oz fernet branca
+* 2 dashes orange bitters
 * garnish: cherry
 
 #### WHISKY SOUR
@@ -464,7 +466,7 @@
 #### HANKY PANKY
 * 1 1/2 oz gin
 * 1 1/2 oz sweet vermouth
-* 2 dashes fernet branca
+* 1/4 oz fernet branca
 * garnish: orange peel
 
 #### OLD PAL
@@ -569,9 +571,9 @@
 * garnish: cherry
 
 #### BOBBY BURNS
-* 1 1/2 oz whisky
-* 1 1/2 oz sweet vermouth
-* 1/4 oz benedictine
+* 2 oz whisky
+* 3/4 oz sweet vermouth
+* 1/2 oz benedictine
 * garnish: lemon twist
 
 #### SIDECAR
@@ -597,10 +599,11 @@
 
 #### CASINO
 * 2 oz gin
-* 1/4 oz maraschino liqueur
-* 1/4 oz orange flower water
-* 1/4 oz lemon juice
+* 1/2 oz maraschino liqueur
+* 1/2 oz lemon juice
+* 2 dashes orange bitters
 * garnish: cherry
+* garnish: lemon peel
 
 #### BRAMBLE
 * 2 oz gin
@@ -635,7 +638,7 @@
 * 1 1/2 oz gin
 * 1 1/2 oz sweet vermouth
 * 1/4 oz maraschino liqueur
-* 2 dashes angostura bitters
+* 2 dashes orange bitters
 * garnish: orange twist
 
 #### TORONTO

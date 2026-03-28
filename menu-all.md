@@ -203,7 +203,7 @@ _brandy, rum, cointreau, lemon juice_
 ##### - AVIATION
 _gin, maraschino liqueur, creme de violette, lemon juice_
 ##### - CASINO
-_gin, maraschino liqueur, orange flower water, lemon juice_
+_gin, maraschino liqueur, lemon juice, orange bitters_
 ##### - BRAMBLE
 _gin, lemon juice, simple syrup, cassis_
 ##### - CLOVER CLUB
