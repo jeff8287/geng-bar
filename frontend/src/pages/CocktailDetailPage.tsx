@@ -9,6 +9,7 @@ import ReviewList from '../components/reviews/ReviewList'
 import ReviewForm from '../components/reviews/ReviewForm'
 import { getCocktailDetail } from '../api/cocktails'
 import { getReviews } from '../api/reviews'
+import { getCocktailImageUrl } from '../utils/cocktailImage'
 import type { CocktailDetail, Review } from '../types'
 
 export default function CocktailDetailPage() {
@@ -73,13 +74,16 @@ export default function CocktailDetailPage() {
         >
           {/* Hero */}
           <div className="relative h-52 sm:h-64 bg-gradient-to-br from-bar-card to-bar-bg overflow-hidden">
-            {cocktail.image_url ? (
-              <img src={cocktail.image_url} alt={cocktail.name} className="w-full h-full object-cover" />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-8xl opacity-20">🍸</span>
-              </div>
-            )}
+            {(() => {
+              const imageUrl = getCocktailImageUrl(cocktail)
+              return imageUrl ? (
+                <img src={imageUrl} alt={cocktail.name} className="w-full h-full object-contain p-8 pixel-art" />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-8xl opacity-20">🍸</span>
+                </div>
+              )
+            })()}
             <div className="absolute inset-0 bg-gradient-to-t from-bar-bg via-transparent to-transparent" />
           </div>
 
