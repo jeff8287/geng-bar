@@ -82,9 +82,9 @@ _vodka, orange juice, pineapple juice_
 ##### - ESPRESSO MARTINI
 _vodka, espresso, baileys, simple syrup_
 ##### - BANANA DAIQUIRI
-_white rum, banana liqueur, lime juice_
+_white rum, creme de banana, lime juice_
 ##### - BANANA BREAD
-_whisky, banana liqueur, baileys_
+_whisky, creme de banana, baileys_
 ##### - GRASSHOPPER
 _creme de menthe, creme de cacao, baileys_
 ##### - ALEXANDER
@@ -272,7 +272,7 @@ _vodka, peach schnapps, orange juice, cranberry juice_
 ##### - TEQUILA SUNRISE
 _tequila, orange juice, grenadine_
 ##### - RUM RUNNER
-_rum, banana liqueur, cassis, orange juice, pineapple juice, grenadine_
+_rum, creme de banana, cassis, orange juice, pineapple juice, grenadine_
 ##### - CARIBBEAN PUNCH
 _rum, orange juice, pineapple juice, lime juice, grenadine_
 

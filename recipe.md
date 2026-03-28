@@ -223,14 +223,14 @@
 
 #### BANANA DAIQUIRI
 * 2 oz rum
-* 1 oz banana liqueur
+* 1 oz creme de banana
 * 1 oz lime juice
 * 1/2 oz simple syrup
 * garnish: banana slice
 
 #### BANANA BREAD
 * 1 1/2 oz whisky
-* 1 oz banana liqueur
+* 1 oz creme de banana
 * 1 oz baileys
 * garnish: cinnamon
 
@@ -839,7 +839,7 @@
 #### RUM RUNNER
 * 1 oz rum
 * 1 oz rum
-* 1/2 oz banana liqueur
+* 1/2 oz creme de banana
 * 1/2 oz cassis
 * 1 oz orange juice
 * 1 oz pineapple juice
