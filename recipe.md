@@ -76,9 +76,12 @@
 
 #### PALOMA
 * 2 oz tequila
+* 2 oz grapefruit juice
 * 1/2 oz lime juice
-* 4 oz grapefruit soda
+* 1/4 oz simple syrup
+* 2 oz soda water
 * garnish: lime wedge
+* garnish: salt rim
 
 #### AMERICANO
 * 1 1/2 oz campari

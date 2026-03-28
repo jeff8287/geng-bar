@@ -31,7 +31,7 @@ _rum, lime juice, ginger ale_
 ##### - WHISKY HIGHBALL
 _whisky, soda_
 ##### - PALOMA
-_tequila, lime juice, soda_
+_tequila, grapefruit juice, lime juice, simple syrup, soda_
 ##### - AMERICANO
 _campari, sweet vermouth, soda_
 ##### - CAMPARI SPRITZ
