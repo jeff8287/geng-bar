@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import type { CocktailListItem } from '../../types'
 import AvailabilityBadge from './AvailabilityBadge'
 import { useFavoritesContext } from '../../contexts/FavoritesContext'
+import { getCocktailImageUrl } from '../../utils/cocktailImage'
 
 const CATEGORY_GRADIENTS: Record<string, string> = {
   refreshing: 'from-cyan-900 to-blue-900',
@@ -41,6 +42,7 @@ export default function CocktailCard({ cocktail }: CocktailCardProps) {
   const { isFavorite, toggle } = useFavoritesContext()
   const gradient = CATEGORY_GRADIENTS[cocktail.category ?? ''] ?? 'from-gray-800 to-gray-900'
   const fav = isFavorite(cocktail.id)
+  const imageUrl = getCocktailImageUrl(cocktail)
 
   return (
     <motion.div
@@ -63,12 +65,12 @@ export default function CocktailCard({ cocktail }: CocktailCardProps) {
             {fav ? '♥' : '♡'}
           </span>
         </button>
-        {cocktail.image_url ? (
+        {imageUrl ? (
           <img
-            src={cocktail.image_url}
+            src={imageUrl}
             alt={cocktail.name}
             loading="lazy"
-            className="w-full h-full object-cover"
+            className="w-full h-full object-contain p-4 pixel-art"
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">

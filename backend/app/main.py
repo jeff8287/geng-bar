@@ -4,6 +4,7 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
 
 from app.config import settings
 from app.database import engine, SessionLocal
@@ -61,7 +62,28 @@ media_path = Path(settings.MEDIA_DIR)
 media_path.mkdir(parents=True, exist_ok=True)
 app.mount("/media", StaticFiles(directory=str(media_path.parent)), name="media")
 
-
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+# --- Serve frontend static files (built with `npm run build`) ---
+_FRONTEND_DIST = Path(settings.FRONTEND_DIST_DIR)
+
+if _FRONTEND_DIST.is_dir():
+    # Serve bundled assets (JS, CSS)
+    _assets = _FRONTEND_DIST / "assets"
+    if _assets.is_dir():
+        app.mount("/assets", StaticFiles(directory=str(_assets)), name="frontend-assets")
+
+    # Serve static images (pixel art cocktails, etc.)
+    _images = _FRONTEND_DIST / "images"
+    if _images.is_dir():
+        app.mount("/images", StaticFiles(directory=str(_images)), name="frontend-images")
+
+    @app.get("/{full_path:path}")
+    async def serve_spa(full_path: str):
+        """SPA fallback: serve the file if it exists, otherwise index.html."""
+        file = _FRONTEND_DIST / full_path
+        if file.is_file() and ".." not in full_path:
+            return FileResponse(file)
+        return FileResponse(_FRONTEND_DIST / "index.html")

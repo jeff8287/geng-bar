@@ -11,6 +11,7 @@ import { useReviews } from '../hooks/useReviews'
 import { useIngredients } from '../hooks/useIngredients'
 import { useAuth } from '../contexts/AuthContext'
 import AvailabilityBadge from '../components/menu/AvailabilityBadge'
+import { getCocktailImageUrl } from '../utils/cocktailImage'
 
 function parseSteps(instructions: string): string[] {
   const byNewline = instructions.split(/\n+/).map(s => s.trim()).filter(Boolean)
@@ -67,13 +68,16 @@ export default function CocktailDetailPage() {
         >
           {/* Hero */}
           <div className="relative h-52 sm:h-64 bg-gradient-to-br from-bar-card to-bar-bg overflow-hidden">
-            {cocktail.image_url ? (
-              <img src={cocktail.image_url} alt={cocktail.name} loading="lazy" className="w-full h-full object-cover" />
-            ) : (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-8xl opacity-20">🍸</span>
-              </div>
-            )}
+            {(() => {
+              const imageUrl = getCocktailImageUrl(cocktail)
+              return imageUrl ? (
+                <img src={imageUrl} alt={cocktail.name} loading="lazy" className="w-full h-full object-contain p-8 pixel-art" />
+              ) : (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-8xl opacity-20">🍸</span>
+                </div>
+              )
+            })()}
             <div className="absolute inset-0 bg-gradient-to-t from-bar-bg via-transparent to-transparent" />
           </div>
 
