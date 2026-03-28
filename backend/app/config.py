@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     ADMIN_PASSWORD: str = "admin"
     CORS_ORIGINS: str = "*"
     MEDIA_DIR: str = "media/cocktails"
+    FRONTEND_DIST_DIR: str = "/app/frontend_dist"
 
     model_config = {"env_file": ".env", "extra": "ignore"}
 

@@ -21,6 +21,7 @@ services:
     volumes:
       - ./backend:/app
       - media_data:/app/media
+      - ./frontend/dist:/app/frontend_dist:ro
       - ./stock.yaml:/data/stock.yaml:ro
       - ./menu-all.md:/data/menu-all.md:ro
       - ./recipe.md:/data/recipe.md:ro
