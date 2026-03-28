@@ -5,10 +5,18 @@ from sqlalchemy.orm import Session
 
 from app.database import get_db
 from app.schemas.cocktail import CocktailListResponse, CocktailResponse
+from app.schemas.ingredient import IngredientResponse
 from app.services.cocktail_service import CocktailService
 from app.services.menu_service import MenuService, _compute_avg_rating
 
 router = APIRouter()
+
+
+@router.get("/ingredients", response_model=list[IngredientResponse])
+def get_available_ingredients(db: Session = Depends(get_db)):
+    """Guest-facing: list ingredients that are in stock or low."""
+    return MenuService.get_in_stock_ingredients(db)
+
 
 
 @router.get("/", response_model=list[CocktailListResponse])

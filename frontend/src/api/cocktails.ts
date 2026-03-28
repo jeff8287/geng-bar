@@ -15,6 +15,12 @@ export async function getCocktailDetail(id: number): Promise<CocktailDetail> {
   return response.data
 }
 
+export async function getAvailableIngredients(): Promise<import('../types').Ingredient[]> {
+  const response = await client.get<import('../types').Ingredient[]>('/menu/ingredients')
+  return response.data
+}
+
+
 // Admin endpoints
 export async function getAllCocktailsAdmin(): Promise<CocktailDetail[]> {
   const response = await client.get<CocktailDetail[]>('/cocktails/')

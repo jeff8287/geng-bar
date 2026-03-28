@@ -76,6 +76,26 @@
     "cocktailsByCategory": "카테고리별 칵테일",
     "stockStatus": "재료 재고 현황"
   },
+  "slotMachine": {
+    "button": "랜덤 재료 믹스",
+    "title": "재료 슬롯머신",
+    "description": "3개의 랜덤 재료를 뽑아 어울리는 칵테일을 찾아보세요!",
+    "slot1": "재료 1",
+    "slot2": "재료 2",
+    "slot3": "재료 3",
+    "spin": "돌리기!",
+    "again": "다시 돌리기",
+    "pool": "보유 중인 {{count}}개 재료에서 추첨"
+  },
+  "roulette": {
+    "button": "오늘 뭐 마실까?",
+    "title": "칵테일 룰렛",
+    "hint": "버튼을 눌러 행운의 칵테일을 뽑아보세요!",
+    "spin": "돌리기!",
+    "again": "다시 돌리기",
+    "goDetail": "이걸로 할래요!",
+    "pool": "주문 가능한 {{count}}개 칵테일 중에서 추천"
+  },
   "common": {
     "save": "저장",
     "saving": "저장 중...",

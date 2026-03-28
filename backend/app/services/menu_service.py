@@ -35,6 +35,17 @@ def get_filter_mode(db: Session) -> FilterMode:
 
 class MenuService:
     @staticmethod
+    def get_in_stock_ingredients(db: Session) -> list:
+        """Return ingredients that are in_stock or low (available for use)."""
+        from app.models.ingredient import Ingredient
+        return (
+            db.query(Ingredient)
+            .filter(Ingredient.status != IngredientStatus.OUT_OF_STOCK)
+            .order_by(Ingredient.category, Ingredient.name)
+            .all()
+        )
+
+    @staticmethod
     def get_menu(
         db: Session,
         category: Optional[str] = None,

@@ -76,6 +76,26 @@
     "cocktailsByCategory": "Cocktails by Category",
     "stockStatus": "Ingredient Stock Status"
   },
+  "slotMachine": {
+    "button": "Random Mix",
+    "title": "Ingredient Slot Machine",
+    "description": "Spin 3 random ingredients and find matching cocktails!",
+    "slot1": "Slot 1",
+    "slot2": "Slot 2",
+    "slot3": "Slot 3",
+    "spin": "Spin!",
+    "again": "Spin again",
+    "pool": "Drawing from {{count}} available ingredients"
+  },
+  "roulette": {
+    "button": "Feeling lucky?",
+    "title": "Cocktail Roulette",
+    "hint": "Press the button to spin for a cocktail!",
+    "spin": "Spin!",
+    "again": "Spin again",
+    "goDetail": "I'll have this!",
+    "pool": "Picking from {{count}} available cocktails"
+  },
   "common": {
     "save": "Save",
     "saving": "Saving...",

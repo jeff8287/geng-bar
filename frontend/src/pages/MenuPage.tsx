@@ -5,6 +5,8 @@ import Header from '../components/layout/Header'
 import MobileNav from '../components/layout/MobileNav'
 import FilterBar from '../components/menu/FilterBar'
 import CocktailGrid from '../components/menu/CocktailGrid'
+import CocktailRoulette from '../components/menu/CocktailRoulette'
+import IngredientSlotMachine from '../components/menu/IngredientSlotMachine'
 import { useMenu } from '../hooks/useMenu'
 import { useTranslation } from 'react-i18next'
 import { useDebounce } from '../hooks/useDebounce'
@@ -71,12 +73,16 @@ export default function MenuPage() {
           >
             {displayedCocktails.length} cocktail{displayedCocktails.length !== 1 ? 's' : ''}
           </motion.p>
-          <button
-            onClick={handleRefresh}
-            className="text-gray-500 hover:text-bar-gold transition-colors text-xs"
-          >
-            ↻ {t('menu.refresh')}
-          </button>
+          <div className="flex items-center gap-2">
+            <CocktailRoulette cocktails={displayedCocktails} />
+            <IngredientSlotMachine />
+            <button
+              onClick={handleRefresh}
+              className="text-gray-500 hover:text-bar-gold transition-colors text-xs"
+            >
+              ↻ {t('menu.refresh')}
+            </button>
+          </div>
         </div>
 
         {error && (
