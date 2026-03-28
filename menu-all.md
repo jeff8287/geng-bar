@@ -269,8 +269,6 @@ _rum, brandy, orange juice, lemon juice, orgeat syrup_
 _rum, coconut rum, grenadine, orange juice, pineapple juice_
 ##### - SEX ON THE BEACH
 _vodka, peach schnapps, orange juice, cranberry juice_
-##### - TEQUILA SUNRISE
-_tequila, orange juice, grenadine_
 ##### - RUM RUNNER
 _rum, creme de banana, cassis, orange juice, pineapple juice, grenadine_
 ##### - CARIBBEAN PUNCH

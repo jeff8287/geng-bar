@@ -832,13 +832,6 @@
 * 2 oz cranberry juice
 * garnish: orange slice
 
-#### TEQUILA SUNRISE
-* 2 oz tequila
-* 4 oz orange juice
-* 1/2 oz grenadine
-* garnish: orange slice
-* garnish: cherry
-
 #### RUM RUNNER
 * 1 oz rum
 * 1 oz rum
@@ -866,8 +859,8 @@
 * 1 1/2 oz fernet branca
 
 #### HARD START
-* 1 oz espresso
-* 1 oz fernet branca
+* 3/4 oz fernet branca
+* 3/4 oz fernet menta
 
 #### PUNT E MES
 * 1 1/2 oz punt e mes
