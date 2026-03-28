@@ -44,6 +44,26 @@ _gin, basil, lemon juice, simple syrup_
 _rum, lime juice, coke_
 ##### - SPUMONI
 _campari, grapefruit juice, tonic water_
+##### - TOM COLLINS
+_gin, lemon juice, simple syrup, soda water_
+##### - MOJITO
+_rum, lime juice, simple syrup, mint, soda water_
+##### - APEROL SPRITZ
+_prosecco, aperol, soda water_
+##### - HUGO SPRITZ
+_prosecco, st germain, soda water, mint_
+##### - FRENCH 75
+_gin, lemon juice, simple syrup, champagne_
+##### - GIN RICKEY
+_gin, lime juice, soda water_
+##### - VODKA SODA
+_vodka, soda water_
+##### - VODKA TONIC
+_vodka, tonic water_
+##### - SHANDY
+_beer, lemonade_
+##### - MICHELADA
+_beer, lime juice, hot sauce, worcestershire sauce_
 
 ---
 
@@ -73,6 +93,22 @@ _vodka, creme de cacao, milk, nutmeg_
 _creme de cacao, baileys, disaronno, milk_
 ##### - IRISH COFFEE
 _whisky, coffee, cream_
+##### - WHITE RUSSIAN
+_vodka, kahlua, cream_
+##### - MUDSLIDE
+_vodka, kahlua, baileys, cream_
+##### - BRANDY ALEXANDER
+_brandy, creme de cacao, cream_
+##### - AMARETTO SOUR
+_disaronno, lemon juice, simple syrup, egg white_
+##### - FRANGELICO COFFEE
+_frangelico, coffee, cream_
+##### - TOASTED ALMOND
+_disaronno, kahlua, cream_
+##### - GOLDEN CADILLAC
+_galliano, creme de cacao, cream_
+##### - PINK SQUIRREL
+_creme de noyaux, creme de cacao, cream_
 
 ---
 
@@ -138,8 +174,66 @@ _tequila, campari, dry vermouth, sweet vermouth_
 _islay whisky, campari, green chartreuse_
 ##### - BLOODY MARY
 _vodka, tomato juice, lemon juice, worcestershire sauce, tabasco, salt, pepper_
+##### - BLOODY CAESAR
+_vodka, clamato juice, worcestershire sauce, tabasco_
 ##### - EL DIABLO
 _tequila, cassis, lime juice, ginger beer_
+##### - SAZERAC
+_rye whiskey, simple syrup, peychaud's bitters, angostura bitters_
+##### - VIEUX CARRE
+_rye whiskey, brandy, sweet vermouth, benedictine, peychaud's bitters, angostura bitters_
+##### - LAST WORD
+_gin, green chartreuse, maraschino liqueur, lime juice_
+##### - CORPSE REVIVER #2
+_gin, cointreau, lillet blanc, lemon juice, absinthe_
+##### - PAPER PLANE
+_bourbon, aperol, amaro nonino, lemon juice_
+##### - NAKED AND FAMOUS
+_mezcal, aperol, yellow chartreuse, lime juice_
+##### - BLOOD AND SAND
+_whisky, sweet vermouth, cherry heering, orange juice_
+##### - ROB ROY
+_whisky, sweet vermouth, angostura bitters_
+##### - BOBBY BURNS
+_whisky, sweet vermouth, benedictine_
+##### - SIDECAR
+_brandy, cointreau, lemon juice_
+##### - BETWEEN THE SHEETS
+_brandy, rum, cointreau, lemon juice_
+##### - AVIATION
+_gin, maraschino liqueur, creme de violette, lemon juice_
+##### - CASINO
+_gin, maraschino liqueur, orange flower water, lemon juice_
+##### - BRAMBLE
+_gin, lemon juice, simple syrup, cassis_
+##### - CLOVER CLUB
+_gin, lemon juice, raspberry syrup, egg white_
+##### - VESPER MARTINI
+_gin, vodka, lillet blanc_
+##### - BIJOU
+_gin, sweet vermouth, green chartreuse, orange bitters_
+##### - MARTINEZ
+_gin, sweet vermouth, maraschino liqueur, angostura bitters_
+##### - TORONTO
+_rye whiskey, fernet branca, simple syrup, angostura bitters_
+##### - MONTE CARLO
+_rye whiskey, benedictine, angostura bitters_
+##### - TIPPERARY
+_whisky, sweet vermouth, green chartreuse, angostura bitters_
+##### - FINAL WARD
+_rye whiskey, green chartreuse, maraschino liqueur, lemon juice_
+##### - TRINIDAD SOUR
+_angostura bitters, orgeat syrup, lemon juice, rye whiskey_
+##### - JUNGLE BIRD
+_rum, campari, pineapple juice, lime juice, simple syrup_
+##### - BROWN DERBY
+_bourbon, grapefruit juice, honey syrup_
+##### - HEMINGWAY DAIQUIRI
+_rum, lime juice, grapefruit juice, maraschino liqueur_
+##### - NAVY GROG
+_rum, lime juice, grapefruit juice, honey syrup_
+##### - ZOMBIE
+_rum, gold rum, lime juice, falernum, grenadine, angostura bitters_
 
 ---
 
@@ -161,6 +255,26 @@ _vodka, cranberry juice, pineapple juice_
 _tequila, orange juice, grenadine_
 ##### - FERNET CON COCA
 _fernet branca, coke_
+##### - MAI TAI
+_rum, orange curacao, orgeat syrup, lime juice, simple syrup_
+##### - HURRICANE
+_rum, passion fruit syrup, orange juice, lime juice_
+##### - SINGAPORE SLING
+_gin, cherry heering, cointreau, benedictine, pineapple juice, lime juice, grenadine, angostura bitters_
+##### - PLANTER'S PUNCH
+_rum, lime juice, simple syrup, angostura bitters, orange juice_
+##### - SCORPION
+_rum, brandy, orange juice, lemon juice, orgeat syrup_
+##### - BAHAMA MAMA
+_rum, coconut rum, grenadine, orange juice, pineapple juice_
+##### - SEX ON THE BEACH
+_vodka, peach schnapps, orange juice, cranberry juice_
+##### - TEQUILA SUNRISE
+_tequila, orange juice, grenadine_
+##### - RUM RUNNER
+_rum, banana liqueur, cassis, orange juice, pineapple juice, grenadine_
+##### - CARIBBEAN PUNCH
+_rum, orange juice, pineapple juice, lime juice, grenadine_
 
 ---
 
@@ -170,3 +284,7 @@ _fernet branca, coke_
 - HARD START
 - PUNT E MES
 - CAMPARI
+- B-52
+- KAMIKAZE
+- LEMON DROP SHOT
+- JAGERBOMB
