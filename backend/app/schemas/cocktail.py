@@ -1,7 +1,7 @@
 from datetime import datetime
-from typing import Optional
+from typing import Any, Optional
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 
 class CocktailIngredientBase(BaseModel):
@@ -62,6 +62,30 @@ class CocktailResponse(CocktailBase):
     updated_at: datetime
     ingredients: list[CocktailIngredientResponse] = []
     avg_rating: Optional[float] = None
+
+    @model_validator(mode='before')
+    @classmethod
+    def map_ingredient_links(cls, data: Any) -> Any:
+        if not hasattr(data, 'ingredient_links'):
+            return data
+        links = []
+        for link in (data.ingredient_links or []):
+            ingredient_name = None
+            if hasattr(link, 'ingredient') and link.ingredient is not None:
+                ingredient_name = link.ingredient.name
+            links.append({
+                'ingredient_id': link.ingredient_id,
+                'amount': link.amount,
+                'unit': link.unit,
+                'is_optional': link.is_optional,
+                'ingredient_name': ingredient_name,
+            })
+        # Build a plain dict instead of mutating the ORM instance
+        result = {}
+        for col in data.__mapper__.column_attrs.keys():
+            result[col] = getattr(data, col)
+        result['ingredients'] = links
+        return result
 
 
 class CocktailListResponse(BaseModel):

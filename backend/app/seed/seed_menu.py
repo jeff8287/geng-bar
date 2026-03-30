@@ -86,17 +86,72 @@ def _find_ingredient(db: Session, name: str) -> Ingredient | None:
     return None
 
 
+def _guess_category(name: str) -> str:
+    """Guess an ingredient category from its name using known keyword patterns."""
+    n = name.lower().strip()
+
+    SPIRITS = {
+        "vodka", "whisky", "whiskey", "rum", "gin", "tequila", "brandy",
+        "mezcal", "bourbon", "rye whiskey", "rye", "peated whisky",
+        "white rum", "dark rum", "gold rum", "coconut rum", "spiced rum",
+        "islay whisky", "earl grey infused gin", "french black tea infused gin",
+    }
+    LIQUEURS = {
+        "kahlua", "baileys", "cointreau", "campari", "aperol",
+        "fernet branca", "fernet menta", "sweet vermouth", "dry vermouth",
+        "disaronno", "drambuie", "cassis", "st germain", "limoncello",
+        "green chartreuse", "yellow chartreuse", "cherry heering",
+        "maraschino liqueur", "lillet blanc", "galliano", "frangelico",
+        "benedictine", "absinthe", "blue curacao", "orange curacao",
+        "falernum", "peach schnapps", "jagermeister", "amaro nonino",
+        "grand marnier", "punt e mes",
+    }
+    JUICES = {
+        "soda water", "club soda", "ginger ale", "ginger beer", "tonic water",
+        "cola", "coke", "lemon juice", "lime juice", "orange juice",
+        "cranberry juice", "grapefruit juice", "pineapple juice",
+        "tomato juice", "clamato juice", "espresso", "coffee",
+        "prosecco", "champagne", "lemonade", "energy drink", "beer",
+        "cold brew coffee", "oolong tea",
+    }
+    BITTERS = {
+        "angostura bitters", "orange bitters", "chocolate bitters",
+        "peychaud's bitters", "celery bitters", "aromatic bitters",
+    }
+    SYRUPS = {
+        "simple syrup", "honey syrup", "grenadine", "orgeat syrup",
+        "raspberry syrup", "passion fruit syrup", "sugar",
+    }
+    HERBS = {"basil", "mint"}
+    FRUITS = {"lemon", "lime", "orange", "strawberry"}
+    if n in SPIRITS:
+        return "Spirits"
+    if n in LIQUEURS or n.startswith("creme de"):
+        return "Liqueurs"
+    if n in JUICES:
+        return "Juices"
+    if n in BITTERS:
+        return "Bitters"
+    if n in HERBS:
+        return "Herbs"
+    if n in FRUITS:
+        return "Fruits"
+    if n in SYRUPS:
+        return "Syrups"
+    return "Other"
+
+
 def _get_or_create_ingredient(db: Session, name: str) -> Ingredient:
     """
     Return an existing ingredient (fuzzy match) or create a generic one.
-    The created ingredient has category='Other' and no subcategory.
+    The created ingredient has category guessed from its name.
     """
     existing = _find_ingredient(db, name)
     if existing:
         return existing
 
     # Create a generic ingredient so the cocktail link can be established
-    ingredient = Ingredient(name=name, category="Other", subcategory=None)
+    ingredient = Ingredient(name=name, category=_guess_category(name), subcategory=None)
     db.add(ingredient)
     db.flush()  # get id without committing
     return ingredient

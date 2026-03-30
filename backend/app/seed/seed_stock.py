@@ -16,6 +16,7 @@ import yaml
 from sqlalchemy.orm import Session
 
 from app.models.ingredient import Ingredient, IngredientStatus
+from app.seed.seed_menu import _guess_category
 
 # Known subcategory markers within spirit groups (case-insensitive comparison)
 _WHISKY_SUBCATS = {
@@ -117,11 +118,12 @@ def _parse_yaml_items(data: dict) -> list[dict]:
 
     for top_key, top_val in data.items():
         if top_key.lower() == "etc":
-            category = "Other"
+            category = "Other"  # default, overridden per-item below
         elif top_key == "Absent":
-            category = "Other"
+            category = "Other"  # default, overridden per-item below
         else:
             category = top_key
+        use_name_category = top_key.lower() == "etc" or top_key == "Absent"
 
         status = IngredientStatus.OUT_OF_STOCK if top_key == "Absent" else IngredientStatus.IN_STOCK
 
@@ -138,7 +140,13 @@ def _parse_yaml_items(data: dict) -> list[dict]:
             if top_key == "Spirits":
                 results.extend(_parse_spirit_string(raw, category, status))
             else:
-                results.extend(_parse_simple_string(raw, category, status))
+                parsed = _parse_simple_string(raw, category, status)
+                if use_name_category:
+                    for p in parsed:
+                        guessed = _guess_category(p["name"])
+                        if guessed != "Other":
+                            p["category"] = guessed
+                results.extend(parsed)
 
     return results
 
@@ -158,8 +166,12 @@ def seed_stock(db: Session, yaml_path: str) -> int:
     items = _parse_yaml_items(data)
 
     count = 0
+    seen_names: set[str] = set()
     for item in items:
         name = item["name"]
+        if name in seen_names:
+            continue
+        seen_names.add(name)
         existing = db.query(Ingredient).filter(Ingredient.name == name).first()
         if existing:
             existing.category = item["category"]
@@ -173,6 +185,7 @@ def seed_stock(db: Session, yaml_path: str) -> int:
                 status=item["status"],
             )
             db.add(ingredient)
+            db.flush()
         count += 1
 
     db.commit()
